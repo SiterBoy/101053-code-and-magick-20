@@ -25,7 +25,7 @@ var renderText = function (ctx, x, y, color, text) {
 
 var renderGisto = function (ctx, index, name, time, maxtime) {
   var randomNumber = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
-  name === 'Вы' ? ctx.fillStyle = 'rgba(255, 0, 0, 1)' : ctx.fillStyle = 'hsl(243, ' + randomNumber + '%, 38%)';
+  ctx.fillStyle = name === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsl(243, ' + randomNumber + '%, 38%)';
   var currentColumnHeight = Math.round(time * MAX_COLUMN_HEIGHT / maxtime);
   ctx.fillRect(CLOUD_X + GAP_TEXT + COLUMN_GAP * index, firstCoordGistogramm + GAP + MAX_COLUMN_HEIGHT - currentColumnHeight, COLUMN_WIDTH, currentColumnHeight);
   return currentColumnHeight;
@@ -43,12 +43,11 @@ var findMaxElement = function (array) {
 
 window.renderStatistics = function (ctx, players, times) {
   ctx.font = FONT;
-  var randomNumber = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0,0,0,0.5)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
-  renderText(ctx, CLOUD_X + GAP_TEXT, CLOUD_Y + GAP_TEXT * 1.5, FONT_COLOR, 'Ура вы победили!');
-  renderText(ctx, CLOUD_X + GAP_TEXT, CLOUD_Y + GAP_TEXT * 2.5, FONT_COLOR, 'Список результатов:');
+  renderText(ctx, CLOUD_X + GAP_TEXT, CLOUD_Y + GAP_TEXT + GAP_TEXT, FONT_COLOR, 'Ура вы победили!');
+  renderText(ctx, CLOUD_X + GAP_TEXT, CLOUD_Y + GAP_TEXT + GAP_TEXT + GAP_TEXT, FONT_COLOR, 'Список результатов:');
 
   for (var i = 0; i < players.length; i++) {
     renderText(ctx, CLOUD_X + GAP_TEXT + COLUMN_GAP * i, firstCoordGistogramm + MAX_COLUMN_HEIGHT + GAP_TEXT + GAP, FONT_COLOR, players[i]);
