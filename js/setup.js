@@ -6,14 +6,11 @@ var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var EYE_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var COL_WIZARDS = 4;
 
-var getRandomNumber = function (array) {
+var getRandomElem = function (array) {
   var min = 0;
   var max = array.length;
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-var getRandomElem = function (array) {
-  return array[getRandomNumber(array)];
+  var randomNumber = Math.floor(Math.random() * (max - min)) + min;
+  return array[randomNumber];
 };
 
 var generateWizardsData = function () {
@@ -31,24 +28,26 @@ var generateWizardsData = function () {
   return wizards;
 };
 
-var renderWizard = function (index) {
-  var wizards = generateWizardsData();
-
-  var similarListElement = document.querySelector('.setup-similar-list');
+var createWizard = function (wizard) {
   var templateWizard = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
-  var wizard = templateWizard.cloneNode(true);
-
-  wizard.querySelector('.setup-similar-label').textContent = wizards[index].name;
-  wizard.querySelector('.wizard-coat').style.fill = wizards[index].coatColor;
-  wizard.querySelector('.wizard-eyes').style.fill = wizards[index].eyesColor;
-
-  similarListElement.appendChild(wizard);
+  var newWizard = templateWizard.cloneNode(true);
+  newWizard.querySelector('.setup-similar-label').textContent = wizard.name;
+  newWizard.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  newWizard.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+  return newWizard;
 };
 
-for (var i = 0; i < COL_WIZARDS; i++) {
-  renderWizard(i);
-}
+var renderWizards = function () {
+  var wizards = generateWizardsData();
+  var similarListElement = document.querySelector('.setup-similar-list');
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < COL_WIZARDS; i++) {
+    fragment.appendChild(createWizard(wizards[i]));
+  }
+  similarListElement.appendChild(fragment);
+};
+
+renderWizards();
 
 var dialogWindow = document.querySelector('.setup');
 dialogWindow.classList.remove('hidden');
