@@ -17,38 +17,20 @@
     }
   };
 
-  var onWizardCoatClick = function () {
-    var color = window.app.getRandomElem(window.app.COAT_COLORS);
-    wizardCoat.style.fill = color;
-    dialogWindow.querySelector('[name="coat-color"]').value = color;
-  };
-
-  var onWizardEyesClick = function () {
-    var color = window.app.getRandomElem(window.app.EYE_COLORS);
-    wizardEyes.style.fill = color;
-    dialogWindow.querySelector('[name="eyes-color"]').value = color;
-  };
-
-  var onWizardFireballClick = function () {
-    var color = window.app.getRandomElem(window.app.FIREBALL_COLORS);
-    wizardFireball.style.background = color;
-    dialogWindow.querySelector('[name="fireball-color"]').value = color;
-  };
-
   var openPopup = function () {
     dialogWindow.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
-    wizardCoat.addEventListener('click', onWizardCoatClick);
-    wizardEyes.addEventListener('click', onWizardEyesClick);
-    wizardFireball.addEventListener('click', onWizardFireballClick);
+    wizardCoat.addEventListener('click', window.setup.onWizardCoatClick);
+    wizardEyes.addEventListener('click', window.setup.onWizardEyesClick);
+    wizardFireball.addEventListener('click', window.setup.onWizardFireballClick);
   };
 
   var closePopup = function () {
     dialogWindow.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
-    wizardCoat.removeEventListener('click', onWizardCoatClick);
-    wizardEyes.removeEventListener('click', onWizardEyesClick);
-    wizardFireball.removeEventListener('click', onWizardFireballClick);
+    wizardCoat.removeEventListener('click', window.setup.onWizardCoatClick);
+    wizardEyes.removeEventListener('click', window.setup.onWizardEyesClick);
+    wizardFireball.removeEventListener('click', window.setup.onWizardFireballClick);
     dialogWindow.style.left = '';
     dialogWindow.style.top = '';
   };
@@ -102,8 +84,8 @@
 
     var onMouseUp = function (evtUp) {
       evtUp.preventDefault();
-      movingTargetPoint.removeEventListener('mousemove', onMouseMove);
-      movingTargetPoint.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
 
       if (isMoved) {
         var onClickPreventDefault = function (evtClick) {
@@ -114,8 +96,8 @@
       }
     };
 
-    movingTargetPoint.addEventListener('mousemove', onMouseMove);
-    movingTargetPoint.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
 })();
