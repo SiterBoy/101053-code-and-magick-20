@@ -50,6 +50,27 @@
     }
   });
 
+  var form = document.querySelector('.setup-wizard-form');
+
+  var onSubmitButton = function (evt) {
+
+    var data = new FormData(form);
+
+    var onLoad = function () {
+      form.classList.add('.hidden');
+    };
+
+    var onError = function () {
+      // console.log(error); Тут будет отрисовка окна с ошибкой
+    };
+
+    evt.preventDefault();
+    window.backend.save(data, onLoad, onError);
+
+  };
+
+  form.addEventListener('submit', onSubmitButton);
+
   var movingTargetPoint = dialogWindow.querySelector('.upload');
 
   movingTargetPoint.addEventListener('mousedown', function (evt) {

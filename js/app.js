@@ -19,6 +19,13 @@
     return max;
   };
 
+  var getRandomElemObj = function (obj) {
+    var min = 0;
+    var max = Object.keys(obj).length;
+    var randomNumber = Math.floor(Math.random() * (max - min)) + min;
+    return obj[randomNumber];
+  };
+
   var getRandomElem = function (array) {
     var min = 0;
     var max = array.length;
@@ -34,6 +41,7 @@
     FIREBALL_COLORS: FIREBALL_COLORS,
     COL_WIZARDS: COL_WIZARDS,
     findMaxElement: findMaxElement,
+    getRandomElemObj: getRandomElemObj,
     getRandomElem: getRandomElem
   };
 

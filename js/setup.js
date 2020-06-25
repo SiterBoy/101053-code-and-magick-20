@@ -6,13 +6,13 @@
     var templateWizard = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
     var newWizard = templateWizard.cloneNode(true);
     newWizard.querySelector('.setup-similar-label').textContent = wizard.name;
-    newWizard.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    newWizard.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    newWizard.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    newWizard.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
     return newWizard;
   };
 
-  var renderWizards = function () {
-    var wizards = window.data.generateWizardsData();
+  var renderWizards = function (data) {
+    var wizards = data;
     var similarListElement = document.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < window.app.COL_WIZARDS; i++) {
@@ -44,9 +44,10 @@
     dialogWindow.querySelector('[name="fireball-color"]').value = color;
   };
 
-  renderWizards();
+  // renderWizards();
 
   window.setup = {
+    renderWizards: renderWizards,
     onWizardCoatClick: onWizardCoatClick,
     onWizardEyesClick: onWizardEyesClick,
     onWizardFireballClick: onWizardFireballClick
