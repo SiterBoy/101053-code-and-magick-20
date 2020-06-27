@@ -2,8 +2,8 @@
 
 (function () {
 
-  var onError = function () {
-    // console.log(error); Тут будет отрисовка окна с ошибкой
+  var onError = function (error) {
+    window.dialog.warningWindow(error);
   };
 
   var onLoad = function (data) {

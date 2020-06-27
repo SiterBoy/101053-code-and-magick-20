@@ -55,13 +55,13 @@
   var onSubmitButton = function (evt) {
 
     var data = new FormData(form);
-
+    // console.log(data); // Почему-то тут пусто
     var onLoad = function () {
-      form.classList.add('.hidden');
+      dialogWindow.classList.add('.hidden');
     };
 
-    var onError = function () {
-      // console.log(error); Тут будет отрисовка окна с ошибкой
+    var onError = function (error) {
+      warningWindow('Отправить данные не удалось. Код ошибки: ' + error);
     };
 
     evt.preventDefault();
@@ -120,5 +120,20 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  var warningWindow = function (errorMessage) {
+    var elem = document.createElement('div');
+    elem.classList.add('error-message');
+    elem.textContent = errorMessage;
+    document.body.appendChild(elem);
+
+    setTimeout(function () {
+      document.body.removeChild(elem);
+    }, 3000);
+  };
+
+  window.dialog = {
+    warningWindow: warningWindow
+  };
 
 })();

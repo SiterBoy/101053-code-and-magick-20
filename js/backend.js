@@ -5,7 +5,7 @@
   var LOADURL = 'https://javascript.pages.academy/code-and-magick/data';
   var SAVEURL = 'https://javascript.pages.academy/code-and-magick';
 
-  var load = function (onLoad, onError) {
+  var xhrConnection = function (method, url, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = '10000';
@@ -13,27 +13,26 @@
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        onError('Код ответа на ваш запрос: ' + xhr.status);
+        onError(xhr.status);
       }
     });
 
-    xhr.open('GET', LOADURL);
-    xhr.send();
+    xhr.open(method, url);
+
+    if (data) {
+      xhr.send();
+    } else {
+      xhr.send(data);
+    }
+
+  };
+
+  var load = function (onLoad, onError) {
+    xhrConnection('GET', LOADURL, onLoad, onError);
   };
 
   var save = function (data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError('Код ответа на ваш запрос: ' + xhr.status);
-      }
-    });
-
-    xhr.open('POST', SAVEURL);
-    xhr.send();
+    xhrConnection('POST', SAVEURL, onLoad, onError, data);
   };
 
   window.backend = {
