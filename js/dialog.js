@@ -18,6 +18,7 @@
   };
 
   var openPopup = function () {
+    window.data.load();
     dialogWindow.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     wizardCoat.addEventListener('click', window.setup.onWizardCoatClick);
@@ -49,6 +50,27 @@
       dialogWindow.classList.remove('hidden');
     }
   });
+
+  var form = document.querySelector('.setup-wizard-form');
+
+  var onSubmitButton = function (evt) {
+
+    var data = new FormData(form);
+
+    var onLoad = function () {
+      dialogWindow.classList.add('hidden');
+    };
+
+    var onError = function (error) {
+      window.modals.warningWindow('Отправить данные не удалось. Код ошибки: ' + error);
+    };
+
+    evt.preventDefault();
+    window.backend.save(data, onLoad, onError);
+
+  };
+
+  form.addEventListener('submit', onSubmitButton);
 
   var movingTargetPoint = dialogWindow.querySelector('.upload');
 
@@ -99,5 +121,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
 
 })();

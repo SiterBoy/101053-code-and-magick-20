@@ -1,23 +1,27 @@
 'use strict';
 
 (function () {
-  var generateWizardsData = function () {
-    var wizards = [];
+
+  var wizards = [];
+
+  var onError = function (error) {
+    window.dialog.warningWindow('Не удалось подключиться к серверу! Код ошибки: ' + error);
+  };
+
+  var onLoad = function (data) {
     for (var i = 0; i < window.app.COL_WIZARDS; i++) {
-      var nameWizard = window.app.getRandomElem(window.app.NAMES) + ' ' + window.app.getRandomElem(window.app.SURNAMES);
-      var colorOfCoat = window.app.getRandomElem(window.app.COAT_COLORS);
-      var colorOfEye = window.app.getRandomElem(window.app.EYE_COLORS);
-      wizards[i] = {
-        name: nameWizard,
-        coatColor: colorOfCoat,
-        eyesColor: colorOfEye
-      };
+      wizards[i] = window.app.getRandomElemObj(data);
     }
-    return wizards;
+    window.setup.renderWizards(wizards);
+  };
+
+  var load = function () {
+    window.backend.load(onLoad, onError);
   };
 
   window.data = {
-    generateWizardsData: generateWizardsData
+    load: load,
+    wizards: wizards
   };
 
 })();
