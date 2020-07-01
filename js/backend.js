@@ -2,13 +2,13 @@
 
 (function () {
 
-  var LOADURL = 'https://javascript.pages.academy/code-and-magick/data';
-  var SAVEURL = 'https://javascript.pages.academy/code-and-magick';
+  var LOAD_URL = 'https://javascript.pages.academy/code-and-magick/data';
+  var SAVE_URL = 'https://javascript.pages.academy/code-and-magick';
 
-  var xhrConnection = function (method, url, onLoad, onError, data) {
+  var xhrConnection = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.timeout = '10000';
+    xhr.timeout = 10000;
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onLoad(xhr.response);
@@ -17,22 +17,27 @@
       }
     });
 
-    xhr.open(method, url);
+    xhr.addEventListener('timeout', function () {
+      window.modals.warningWindow('Превышен интервал ожидания ответа сервера');
+    });
 
-    if (data) {
-      xhr.send();
-    } else {
-      xhr.send(data);
-    }
+    xhr.addEventListener('error', function () {
+      window.modals.warningWindow('Произвошла непредвиденная ошибка');
+    });
 
+    return xhr;
   };
 
   var load = function (onLoad, onError) {
-    xhrConnection('GET', LOADURL, onLoad, onError);
+    var xhr = xhrConnection(onLoad, onError);
+    xhr.open('GET', LOAD_URL);
+    xhr.send();
   };
 
   var save = function (data, onLoad, onError) {
-    xhrConnection('POST', SAVEURL, onLoad, onError, data);
+    var xhr = xhrConnection(onLoad, onError);
+    xhr.open('POST', SAVE_URL);
+    xhr.send(data);
   };
 
   window.backend = {

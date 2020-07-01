@@ -18,6 +18,7 @@
   };
 
   var openPopup = function () {
+    window.data.load();
     dialogWindow.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     wizardCoat.addEventListener('click', window.setup.onWizardCoatClick);
@@ -55,13 +56,13 @@
   var onSubmitButton = function (evt) {
 
     var data = new FormData(form);
-    // console.log(data); // Почему-то тут пусто
+
     var onLoad = function () {
-      dialogWindow.classList.add('.hidden');
+      dialogWindow.classList.add('hidden');
     };
 
     var onError = function (error) {
-      warningWindow('Отправить данные не удалось. Код ошибки: ' + error);
+      window.modals.warningWindow('Отправить данные не удалось. Код ошибки: ' + error);
     };
 
     evt.preventDefault();
@@ -121,19 +122,5 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var warningWindow = function (errorMessage) {
-    var elem = document.createElement('div');
-    elem.classList.add('error-message');
-    elem.textContent = errorMessage;
-    document.body.appendChild(elem);
-
-    setTimeout(function () {
-      document.body.removeChild(elem);
-    }, 3000);
-  };
-
-  window.dialog = {
-    warningWindow: warningWindow
-  };
 
 })();
