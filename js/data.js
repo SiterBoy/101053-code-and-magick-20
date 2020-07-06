@@ -9,10 +9,8 @@
   };
 
   var onLoad = function (data) {
-    for (var i = 0; i < window.app.COL_WIZARDS; i++) {
-      wizards[i] = window.app.getRandomElemObj(data);
-    }
-    window.setup.renderWizards(wizards);
+    window.data.wizards = data;
+    window.setup.renderWizards();
   };
 
   var load = function () {
