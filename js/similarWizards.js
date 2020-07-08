@@ -29,7 +29,7 @@
 
   var filter = function (data) {
 
-    var wizards = data;
+    var wizards = data.slice();
 
     var filtredWizards = wizards.sort(function (left, right) {
       var rankDiff = getRank(right) - getRank(left);

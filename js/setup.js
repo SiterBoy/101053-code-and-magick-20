@@ -32,19 +32,21 @@
     similarListElement.appendChild(fragment);
   };
 
-  var onWizardCoatClick = window.debounce(function () {
+  var renderWizardsDebounce = window.debounce(renderWizards);
+
+  var onWizardCoatClick = function () {
     var color = window.app.getRandomElem(window.app.COAT_COLORS);
     wizardCoat.style.fill = color;
     coatColorElem.value = color;
-    renderWizards();
-  });
+    renderWizardsDebounce();
+  };
 
-  var onWizardEyesClick = window.debounce(function () {
+  var onWizardEyesClick = function () {
     var color = window.app.getRandomElem(window.app.EYE_COLORS);
     wizardEyes.style.fill = color;
     eyesColorElem.value = color;
-    renderWizards();
-  });
+    renderWizardsDebounce();
+  };
 
   var onWizardFireballClick = function () {
     var color = window.app.getRandomElem(window.app.FIREBALL_COLORS);
